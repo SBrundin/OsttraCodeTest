@@ -8,6 +8,12 @@ This is a simple messaging service that allows you to send, retrieve, and delete
 3. **Delete Messages:** Delete one or more messages for a recipient.
 4. **Get Messages by Range:** Retrieve a list of messages in time order based on a start and stop index.
 
+## Setup
+
+### Prerequisites
+- Python 3.7 or above
+- `pip` package manager
+
 ### Installation
 1. Clone the repository from https://github.com/SBrundin/OsttraCodeTest or open the attached zip-file.
 2. Navigate to the project directory.
@@ -48,9 +54,10 @@ Response:
 ### 2. Get Messages for a Recipient
 
 - **Endpoint:** `GET /get_messages/<recipient>'`
+- **Query Params:** last_retrieved (optional)
 - **Example:**
 ```bash
-curl -X GET http://localhost:5000/get_messages/Bar
+curl -X GET http://localhost:5000/get_messages/Bar?last_retrieved=2024-09-07
 ```
 Response:
 ```json
@@ -60,11 +67,12 @@ Response:
       "id": "abcd-1234-efgh-5678",
       "sender": "Foo",
       "message": "Hello, Bar!",
-      "timestamp": "2024-09-08T12:34:56.789Z"
+      "timestamp": "2024-09-08T12:34:56"
     }
   ]
 }
 ```
+
 
 ### 3. Delete Messages for a Recipient
 - **Endpoint:** `DELETE /delete_messages/<recipient>'`
@@ -95,7 +103,7 @@ Response:
       "id": "abcd-1234-efgh-5678",
       "sender": "Foo",
       "message": "Hello, Bar!",
-      "timestamp": "2024-09-08T12:34:56.789Z"
+      "timestamp": "2024-09-08T12:34:56"
     }
   ]
 }

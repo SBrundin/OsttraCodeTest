@@ -47,10 +47,16 @@ def send_message():
 
 @app.route('/get_messages/<recipient>', methods=['GET'])
 def get_messages(recipient):
+    last_retrieved = request.args.get('last_retrieved', None)
     messages = load_messages()
     recipient_messages = messages.get(recipient, [])
     if not recipient_messages:
         return jsonify({"error": f"No messages found for recipient: {recipient}"}), 400
+
+    if last_retrieved:
+        last_time = datetime.fromisoformat(last_retrieved)
+        recipient_messages = [msg for msg in recipient_messages if datetime.fromisoformat(
+            msg.get('timestamp', [])) > last_time]
 
     return jsonify({"messages": recipient_messages}), 200
 

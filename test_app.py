@@ -2,6 +2,7 @@ import pytest
 from app import app
 import json
 from unittest.mock import patch, mock_open
+from datetime import datetime
 
 mock_message = {
     "Foo": [
@@ -9,7 +10,7 @@ mock_message = {
             "id": "abcd-1234-efgh-5678",
             "sender": "Bar",
             "message": "Hello World!",
-            "timestamp": "2024-09-08T12:34:56.789Z"
+            "timestamp": "2024-09-08T12:34:56"
         }
     ]
 }
@@ -20,21 +21,21 @@ multiple_unsorted_mock_messages = {
             "id": "2",
             "sender": "Bar",
             "message": "I got sent second.",
-            "timestamp": "2024-09-08T12:34:56.789Z"
+            "timestamp": "2024-09-08T12:34:56"
         },
 
         {
             "id": "1",
             "sender": "Bar",
             "message": "I was sent first.",
-            "timestamp": "2024-09-05T11:34:56.789Z"
+            "timestamp": "2024-09-05T11:34:56"
         },
 
         {
             "id": "3",
             "sender": "FooBar",
             "message": "I am the latest message!",
-            "timestamp": "2024-09-10T13:34:56.789Z"
+            "timestamp": "2024-09-10T13:34:56"
         }
     ]
 }
@@ -88,6 +89,19 @@ def test_get_messages(client):
         assert "messages" in data
         assert len(data["messages"]) == 1
         assert data["messages"][0]["message"] == "Hello World!"
+
+
+def test_get_new_messages_with_last_retrieved(client):
+    with patch("builtins.open", mock_open_multiple_unsorted_messages()):
+        # Timestamp chosen to be in between the first message and the later two.
+        timestamp = datetime(2024, 9, 6, 11, 30).isoformat()
+        response = client.get(f'/get_messages/Foo?last_retrieved={timestamp}')
+        assert response.status_code == 200
+        data = response.get_json()
+        assert "messages" in data
+        assert len(data["messages"]) == 2
+        assert data["messages"][0]["message"] == "I got sent second."
+        assert data["messages"][1]["message"] == "I am the latest message!"
 
 
 def test_fail_to_get_messages(client):
