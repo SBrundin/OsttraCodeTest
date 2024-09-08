@@ -9,14 +9,14 @@ This is a simple messaging service that allows you to send, retrieve, and delete
 4. **Get Messages by Range:** Retrieve a list of messages in time order based on a start and stop index.
 
 ### Installation
-1. Open the repository.
+1. Clone the repository from https://github.com/SBrundin/OsttraCodeTest or open the attached zip-file.
 2. Navigate to the project directory.
 3. Install the required packages: 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Start the application:** 
+**Start the application**: 
 ```bash
 python app.py
 ```
