@@ -82,7 +82,7 @@ Response:
 - **Endpoint:** `DELETE /delete_messages/<recipient>'`
 - **Example:**
 ```bash
-curl -X DELETE http://localhost:5000/delete_messages/bar \
+curl -X DELETE http://localhost:5000/delete_messages/Bar \
 -H "Content-Type: application/json" \
 -d '{"message_ids": ["abcd-1234-efgh-5678"]}'
 ```
@@ -97,7 +97,7 @@ Response:
 - **Endpoint:** `GET /get_messages_range/<recipient>'`
 - **Example:**
 ```bash
-curl -X GET "http://localhost:5000/get_messages_range/bob?start=0&stop=5"
+curl -X GET "http://localhost:5000/get_messages_range/Bar?start=0&stop=5"
 ```
 Response:
 ```json
