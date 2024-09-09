@@ -57,6 +57,10 @@ Response:
 - **Query Params:** last_retrieved (optional)
 - **Example:**
 ```bash
+curl -X GET http://localhost:5000/get_messages/Bar
+```
+or with query parameter:
+```bash
 curl -X GET http://localhost:5000/get_messages/Bar?last_retrieved=2024-09-07
 ```
 Response:
